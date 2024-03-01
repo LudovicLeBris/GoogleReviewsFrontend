@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Google review</title>
+    <script src="fakeData.js"></script>
+    <script src="googleReviews.js"></script>
+</head>
+<body class="container">
+    <main class="main"></main>
+    <div class="template">
+        <header class="header">
+            <div class="header--place-name">
+                <h3>Place name</h3>
+            </div>
+            <div class="header--rating">
+                <p class="header--rating--note">Place rating</p>
+            </div>
+            <div class="header--rating-count">
+                <p>Basé sur <span>reviews count</span> avis</p>
+            </div>
+            <div class="header--review-cta">
+                <a href="">Laissez un avis sur Google</a>
+            </div>
+        </header>
+        <div class="main--review">
+            <div class="main--review--author">
+                <img src="" alt="">
+                <div class="main--review--author--info">
+                    <a href="" class="main--review--author--info--name">Reviewer name</a>
+                    <p class="main--review--author--info--date">Time elapsed</p>
+                </div>
+            </div>
+            <div class="main--review--content">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo quis repudiandae enim adipisci maiores vitae velit? Inventore, asperiores dolor. Reprehenderit quas quia qui odit. Incidunt ut iste possimus ducimus consectetur?</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        app.init(
+            'ChIJ_50nNcxrCEgRtR--20T3l0c' /* the google place id */,
+            'light' /* the theme desired : 'light' or 'dark'' */,
+            40 /* the numbers of words before the reviews content is cut */,
+            'https://airbnb.com',
+            fakeData
+        )
+    </script>
+</body>
+</html>

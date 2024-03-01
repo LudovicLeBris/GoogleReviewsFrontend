@@ -1,0 +1,153 @@
+* {
+    margin: 0;
+}
+
+.container {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 16px;
+}
+
+.template {
+    display: none;
+}
+
+.stars {
+    display: flex;
+    gap: 0.5rem
+}
+
+/* --- header --- */
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin : 16px;
+    height: fit-content;
+}
+
+.header--rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:1rem;
+    width: 50%;
+    margin: 8px 0
+}
+
+.header--rating--note {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.header--rating--star {
+    width: auto;
+    height: 1.5em;
+}
+
+.header--place-name {
+    margin: 8px 0;
+    width: max-content;
+}
+
+.header--rating-count {
+    margin: 8px 0;
+}
+
+.header--rating-count span {
+    font-weight: bolder;
+}
+
+.header--review-cta {
+    margin: 8px 0;
+    padding: 8px 16px;
+    background-color:dodgerblue ;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.header--review-cta a {
+    color: white;
+    text-decoration: none;
+}
+
+/* --- main --- */
+
+.main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    margin: 16px;
+}
+
+.main--review {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 25%;
+    height: fit-content;
+}
+
+.main--review--author {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    width: max-content;
+    margin: 8px 0;
+}
+
+.main--review--author img {
+    width: 20%;
+}
+
+.main--review--author--info {
+    display: flex;
+    flex-direction: column;
+}
+
+.main--review--author--info--name {
+    text-decoration: none;
+    font-weight: bolder;
+    color: dodgerblue;
+}
+
+.main--review--rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 8px 0;
+}
+
+.main--review--rating--star {
+    width: auto;
+    height: 1.3em;
+}
+
+.main--review--content {
+    margin: 8px 0;
+    overflow-y: auto;
+    height: 8rem;
+}
+
+.main--review--content::-webkit-scrollbar-track
+{
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.main--review--content::-webkit-scrollbar {
+    width: 6px;
+	background-color: #F5F5F5;
+}
+
+.main--review--content::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-color: #7d7d7d;
+}
