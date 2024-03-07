@@ -1,23 +1,65 @@
 let app = {
+
     placeId: null,
     placeData: null,
     shareUrl: null,
+    scrollPosition: 0,
+    scrollDirection: 'forward',
+    scrollElem: null,
+    scrollLoop: null,
 
-    init: async function(placeId, theme='light', numOfwords=40, shareUrl=null, fakeData) {
+    init: async function(placeId, theme='light', shareUrl=null) {
         console.log('Google reviews initiate')
         this.placeId = placeId
         this.shareUrl = shareUrl
-        this.placeData = await fakeData
+        this.setTheme(theme)
+        this.placeData = await this.getPlaceData()
+        if (!this.placeData) {
+            this.buildErrorsMessage()
+            return false
+        }
         await console.log('Data fetched')
         await this.buildHeader()
         await this.buildReviews()
         await console.log('Google reviews initiated')
+        this.scrollElem = await document.querySelector('.main--inner')
+        const btnElements = await document.querySelectorAll('.btn-control')
+        await btnElements.forEach(btnElement => {
+            btnElement.addEventListener('click', this.handleControlBtn)
+        })
+        await this.scrollElem.addEventListener('click', _ => {clearInterval(app.scrollLoop)})
+        await this.scrollLoop()
+    },
+
+    setTheme: function(theme) {
+        const container_elem = document.querySelector('.container')
+        container_elem.classList.toggle('th-'+theme)
     },
 
     getPlaceData: async function() {
         let apiData = await fetch(`https://strange-mariner-413409.ew.r.appspot.com/${this.placeId}`, {mode: 'cors'})
         apiData = await apiData.json()
+        if ("errors" in apiData) {
+            console.log("error to get place")
+            const postPlace = await this.postPlace()
+            if (postPlace) {
+                apiData = await fetch(`https://strange-mariner-413409.ew.r.appspot.com/${this.placeId}`, {mode: 'cors'})
+                apiData = await apiData.json()
+            } else {
+                return null
+            }
+        }
         return apiData
+    },
+
+    postPlace: async function () {
+        let apiPost = await fetch(`https://strange-mariner-413409.ew.r.appspot.com/${this.placeId}`, {method:'POST', mode: 'cors', credentials: 'omit', headers: {"Content-Type": "application/json"},})
+        apiPost = await apiPost.json()
+        if ("error" in apiPost) {
+            console.log('error to post place')
+            return false
+        }
+        return true
     },
 
     buildRatingStars: function(rating) {
@@ -60,7 +102,7 @@ let app = {
         header_elem.querySelector('.header--rating-count span').innerText = reviewCount
 
         if (this.shareUrl) {
-            const ctaUrlElem = header_elem.querySelector('.header--review-cta a')
+            const ctaUrlElem = header_elem.querySelector('.header--review-cta')
             ctaUrlElem.setAttribute('href', this.shareUrl)
         } else {
             header_elem.querySelector('.header--review-cta').remove()
@@ -93,11 +135,34 @@ let app = {
     buildReviews: function() {
         this.placeData.place.Reviews.forEach(review => {
             const review_elem = this.buildReview(review)
-            const main_elem = document.querySelector('.main')
+            const main_elem = document.querySelector('.main--inner')
             main_elem.appendChild(review_elem)
         });
         console.log('Reviews builded')
 
+    },
+
+    buildErrorsMessage: function() {
+        document.querySelector('.container').style.gridTemplateColumns = '100%'
+
+        const btnControl_elems = document.querySelectorAll('.btn-control')
+        btnControl_elems.forEach(btnControl_elem => {
+            btnControl_elem.remove()
+        });
+        document.querySelector('.main--inner').remove()
+
+        const main_elem = document.querySelector('.main')
+        main_elem.style.gridTemplateColumns = '100%' 
+
+        const mainError_elem = document.createElement('div')
+        mainError_elem.setAttribute('class', 'error')
+
+        let errorMessage_elem = document.createElement('h3')
+        errorMessage_elem.setAttribute('class', 'error--message')
+        errorMessage_elem.innerText = "Error : verify place id"
+
+        mainError_elem.appendChild(errorMessage_elem)
+        main_elem.appendChild(mainError_elem)
     },
 
     calculateTimeElapsed: function(date) {
@@ -118,6 +183,39 @@ let app = {
         }
 
         return diff
+    },
+
+    handleControlBtn: function(evt) {
+        clearInterval(app.scrollLoop)
+        const btn = evt.target.id;
+        const scroll_Elem = document.querySelector('.main--inner')
+        if (btn === 'next') {
+            scroll_Elem.scrollBy(1, 0)
+        } else if (btn === 'prev') {
+            scroll_Elem.scrollBy(-1, 0)
+        }
+    },
+
+    scrolling: function() {
+        if (this.scrollDirection === 'forward') {
+            this.scrollPosition = this.scrollElem.scrollLeft
+            this.scrollElem.scrollBy(1, 0)
+        } else if (this.scrollDirection === 'backward') {
+            this.scrollPosition = this.scrollElem.scrollLeft
+            this.scrollElem.scrollBy(-1, 0)
+        }
+        return true
+    },
+
+    scrollLoop: function() {
+        this.scrollLoop = setInterval(_ => {
+            this.scrolling()
+            if (this.scrollDirection === 'forward' && this.scrollPosition === this.scrollElem.scrollLeft && this.scrollPosition > 0 ) {
+                this.scrollDirection = 'backward'
+            } else if (this.scrollDirection === 'backward' && this.scrollPosition === 0 && this.scrollElem.scrollLeft === 0) {
+                this.scrollDirection = 'forward'
+            }
+        }, 3000)
     },
 
 }

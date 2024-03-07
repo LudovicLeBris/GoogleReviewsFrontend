@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
     <title>Google review</title>
-    <script src="fakeData.js"></script>
     <script src="googleReviews.js"></script>
 </head>
-<body class="container">
-    <main class="main"></main>
+<body class="container th-light">
+    <main class="main">
+        <div class="btn-control">
+            <svg id="prev" class="btn" viewBox="0 0 24 24"><path d="M14.6,18.4L8.3,12l6.4-6.4l0.7,0.7L9.7,12l5.6,5.6L14.6,18.4z"></path></svg>
+        </div>
+        <div class="main--inner"></div>
+        <div class="btn-control">
+            <svg id="next" class="btn" viewBox="0 0 24 24"><path d="M9.4,18.4l-0.7-0.7l5.6-5.6L8.6,6.4l0.7-0.7l6.4,6.4L9.4,18.4z"></path></svg>
+        </div>
+    </main>
     <div class="template">
         <header class="header">
             <div class="header--place-name">
@@ -21,20 +29,20 @@
             <div class="header--rating-count">
                 <p>Basé sur <span>reviews count</span> avis</p>
             </div>
-            <div class="header--review-cta">
-                <a href="">Laissez un avis sur Google</a>
-            </div>
+            <a href="" class="header--review-cta" target="_blank">Laissez un avis sur Google</a>
         </header>
         <div class="main--review">
-            <div class="main--review--author">
-                <img src="" alt="">
-                <div class="main--review--author--info">
-                    <a href="" class="main--review--author--info--name">Reviewer name</a>
-                    <p class="main--review--author--info--date">Time elapsed</p>
+            <div class="main--review--inner">
+                <div class="main--review--author">
+                    <img src="" alt="">
+                    <div class="main--review--author--info">
+                        <a href="" class="main--review--author--info--name">Reviewer name</a>
+                        <p class="main--review--author--info--date">Time elapsed</p>
+                    </div>
                 </div>
-            </div>
-            <div class="main--review--content">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo quis repudiandae enim adipisci maiores vitae velit? Inventore, asperiores dolor. Reprehenderit quas quia qui odit. Incidunt ut iste possimus ducimus consectetur?</p>
+                <div class="main--review--content">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo quis repudiandae enim adipisci maiores vitae velit? Inventore, asperiores dolor. Reprehenderit quas quia qui odit. Incidunt ut iste possimus ducimus consectetur?</p>
+                </div>
             </div>
         </div>
     </div>
@@ -42,9 +50,7 @@
         app.init(
             'ChIJ_50nNcxrCEgRtR--20T3l0c' /* the google place id */,
             'light' /* the theme desired : 'light' or 'dark'' */,
-            40 /* the numbers of words before the reviews content is cut */,
-            'https://airbnb.com',
-            fakeData
+            'https://www.google.com',
         )
     </script>
 </body>
