@@ -14,6 +14,7 @@ let app = {
         this.shareUrl = shareUrl
         this.setTheme(theme)
         this.placeData = await this.getPlaceData()
+        // await console.log(this.placeData)
         if (!this.placeData) {
             this.buildErrorsMessage()
             return false
@@ -42,9 +43,11 @@ let app = {
         if ("errors" in apiData) {
             console.log("error to get place")
             const postPlace = await this.postPlace()
+            // await console.log(postPlace)
             if (postPlace) {
                 apiData = await fetch(`https://strange-mariner-413409.ew.r.appspot.com/${this.placeId}`, {mode: 'cors'})
                 apiData = await apiData.json()
+                // await console.log(apiData)
             } else {
                 return null
             }
@@ -53,7 +56,9 @@ let app = {
     },
 
     postPlace: async function () {
-        let apiPost = await fetch(`https://strange-mariner-413409.ew.r.appspot.com/${this.placeId}`, {method:'POST', mode: 'cors', credentials: 'omit', headers: {"Content-Type": "application/json"},})
+        let apiPost = await fetch(
+            `https://strange-mariner-413409.ew.r.appspot.com/${this.placeId}`,
+            {method:'POST', mode: 'cors', credentials: 'omit', headers: {"Content-Type": "application/json"},})
         apiPost = await apiPost.json()
         if ("error" in apiPost) {
             console.log('error to post place')
